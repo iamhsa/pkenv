@@ -52,7 +52,7 @@ cleanup
 
 v=9.9.9
 expected_error_message="'${v}' doesn't exist in remote, please confirm version name."
-if [ -z "$(pkenv install ${v} | grep "${expected_error_message}")" ]; then
+if [ -z "$(pkenv install ${v} 2>&1 | grep "${expected_error_message}")" ]; then
   echo "Installing invalid version ${v}" 1>&2
   exit 1
 fi
