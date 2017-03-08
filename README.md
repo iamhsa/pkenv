@@ -5,9 +5,7 @@
 
 ## Support
 Currently pkenv supports the following OSes
-- Mac OS X (64bit)
-- Linux (64bit)
-- Windows (64bit) - only tested in git-bash
+- Linux (64bit) (tested)
 
 ## Installation
 1. Check out pkenv into any path (here is `${HOME}/.pkenv`)
