@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/iamhsa/pkenv.svg?branch=master)](https://travis-ci.org/iamhsa/pkenv)
+
 # pkenv
 [Packer](https://www.packer.io/) version manager mainly inspired by [tfenv](https://github.com/kamatama41/tfenv)
 
