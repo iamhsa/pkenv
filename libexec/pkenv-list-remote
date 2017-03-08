@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$PKENV_DEBUG" ] && set -x
+
+if [ $# -ne 0 ];then
+  echo "usage: pkenv list-remote" 1>&2
+  exit 1
+fi
+
+curl --tlsv1.2 -sf https://releases.hashicorp.com/packer/ | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+(-(rc|beta)[0-9]+)?" | uniq

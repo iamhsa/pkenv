@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -e
+if [ -n "$PKENV_DEBUG" ]; then
+  export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+  set -x
+fi
+
+# http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
+readlink_f() {
+  local target_file=$1
+  local file_name
+
+  while [ "$target_file" != "" ]; do
+    cd $(dirname ${target_file})
+    file_name=$(basename ${target_file})
+    target_file=$(readlink ${file_name})
+  done
+
+  echo $(pwd -P)/${file_name}
+}
+
+if [ -z "${PKENV_ROOT}" ]; then
+  PKENV_ROOT=$(cd $(dirname $(readlink_f $0))/.. && pwd)
+else
+  PKENV_ROOT="${PKENV_ROOT%/}"
+fi
+export PKENV_ROOT
+PATH="${PKENV_ROOT}/libexec:${PATH}"
+export PATH
+export PKENV_DIR="${PWD}"
+
+abort() {
+  { if [ "$#" -eq 0 ]; then cat -
+    else echo "pkenv: $*"
+    fi
+  } >&2
+  exit 1
+}
+
+command="$1"
+case "$command" in
+"" )
+  { pkenv---version
+    pkenv-help
+  } | abort
+  ;;
+-v | --version )
+  exec pkenv---version
+  ;;
+-h | --help )
+  exec pkenv-help
+  ;;
+* )
+  command_path="$(command -v "pkenv-${command}" || true)"
+  if [ -z "$command_path" ];then
+    { echo "no such command '$command'"
+      pkenv-help
+    } | abort
+  fi
+  shift 1
+  exec "$command_path" "$@"
+  ;;
+esac

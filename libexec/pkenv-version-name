@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Summary: Show the current packer version
+set -e
+[ -n "$PKENV_DEBUG" ] && set -x
+
+PKENV_VERSION_FILE="$(pkenv-version-file)"
+PKENV_VERSION="$(cat "$PKENV_VERSION_FILE" || true)"
+
+if [ -z "$PKENV_VERSION" ]; then
+  echo "pkenv: version could not be resolved (set by $PKENV_VERSION_FILE or pkenv use <version>)" >&2
+  exit 1
+fi
+
+version_exists() {
+  local version="$1"
+  [ -d "${PKENV_ROOT}/versions/${version}" ]
+}
+
+if version_exists "$PKENV_VERSION"; then
+  echo "$PKENV_VERSION"
+else
+  echo "pkenv: version \`$PKENV_VERSION' is not installed (set by $PKENV_VERSION_FILE)" >&2
+  exit 1
+fi

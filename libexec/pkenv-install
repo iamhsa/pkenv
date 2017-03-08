@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+function error_and_die() {
+  echo -e "${1}" >&2
+  exit 1
+}
+
+[ -n "$PKENV_DEBUG" ] && set -x
+
+[ $# -gt 1 ] && error_and_die "usage: pkenv install [<version>]"
+
+declare version regex
+if [[ "${1}" =~ ^latest\:.*$ ]]; then
+  version="${1%%\:*}"
+  regex="${1##*\:}"
+else
+  version="${1}"
+fi
+
+if [ "${version}" == "latest" ]; then
+  version="$(pkenv-list-remote | grep -e "${regex}" | head -n 1)"
+  [ -n "${version}" ] || error_and_die "No matching version found in remote"
+elif [ -z "$(pkenv-list-remote | grep "${version}")" ]; then
+  error_and_die "Packer version '${version}' doesn't exist in remote, please confirm version name."
+fi
+
+if [ -z "${version}" ]; then
+  version_file="$(pkenv-version-file)"
+  if [ "${version_file}" != "${PKENV_ROOT}/version" ];then
+    version="$(cat ${version_file} || true)"
+  fi
+fi
+
+[ -n "${version}" ] || error_and_die "Version is not specified"
+
+dst_path="${PKENV_ROOT}/versions/${version}"
+if [ -f ${dst_path}/packer ];then
+  echo "Packer v${version} is already installed"
+  exit 0
+fi
+
+case "$(uname -s)" in
+Darwin* )
+  os="darwin_amd64"
+  ;;
+MINGW64* )
+  os="windows_amd64"
+  ;;
+* )
+  os="linux_amd64"
+esac
+
+tarball_name="packer_${version}_${os}.zip"
+tarball_url="https://releases.hashicorp.com/packer/${version}/${tarball_name}"
+echo "install Packer ${version}"
+echo "Downloading release tarball from ${tarball_url}"
+curl --tlsv1.2 -f -o /tmp/${tarball_name} "${tarball_url}" || error_and_die "Tarball download failed"
+mkdir -p ${dst_path} || error_and_die "Failed to make directory ${dst_path}"
+unzip /tmp/${tarball_name} -d ${dst_path} || error_and_die "Tarball unzip failed"
+echo -e "\033[0;32mInstallation of Packer v${version} successful\033[0;39m"
