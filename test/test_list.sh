@@ -7,7 +7,7 @@ echo ""
 echo "### List local versions"
 cleanup
 
-for v in 0.9.0-rc2; do
+for v in 0.8.6 0.9.0-rc2 0.9.0 0.12.2 0.12.3; do
   pkenv install ${v}
 done
 
