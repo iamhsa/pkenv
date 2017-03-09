@@ -64,7 +64,6 @@ List installed versions
 List installable versions
 ```sh
 % pkenv list-remote
-[TODO]
 0.12.3
 0.12.2
 0.12.1
