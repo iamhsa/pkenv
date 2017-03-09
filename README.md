@@ -108,5 +108,4 @@ $ rm -rf /some/path/to/pkenv
 
 ## LICENSE
 - [pkenv itself](https://github.com/iamhsa/pkenv/blob/master/LICENSE)
-- [tfenv]((https://github.com/kamatama41/tfenv/blob/master/LICENSE)
-  - pkenv mainly uses tfenv's source code
+- [tfenv](https://github.com/kamatama41/tfenv/blob/master/LICENSE) : pkenv mainly uses tfenv's source code
