@@ -5,6 +5,7 @@ echo "Usage: pkenv <command> [<options>]
 Commands:
    install       Install a specific version of packer
    use           Switch a version to use
+   uninstall     Uninstall a specific version of packer
    list          List all installed versions
    list-remote   List all installable versions
 "
