@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
 function error_and_die() {
-  echo -e "pkenv: ${0}: ${1}" >&2
+  echo -e "${1}" >&2
   exit 1
 }
 
-[ -n "${PKENV_DEBUG}" ] && set -x
+[ -n "$PKENV_DEBUG" ] && set -x
 
-[ ${#} -ne 0 ] \
+[ $# -ne 0 ] \
   && error_and_die "usage: pkenv list"
 
 [ -d "${PKENV_ROOT}/versions" ] \
   || error_and_die "No versions available. Please install one with: pkenv install"
 
-[[ -x "${PKENV_ROOT}/versions" && -r "${PKENV_ROOT}/versions" ]] \
-  || error_and_die "pkenv versions directory is inaccessible!"
-
+set -e
 ls -1 "${PKENV_ROOT}/versions" | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3

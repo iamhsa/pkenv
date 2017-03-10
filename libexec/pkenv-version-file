@@ -2,19 +2,19 @@
 # Usage: pkenv version-file
 # Summary: Detect the file that sets the current pkenv version
 set -e
-[ -n "${PKENV_DEBUG}" ] && set -x
+[ -n "$PKENV_DEBUG" ] && set -x
 
 find_local_version_file() {
-  local root="${1}"
-  while ! [[ "${root}" =~ ^//[^/]*$ ]]; do
+  local root="$1"
+  while ! [[ "$root" =~ ^//[^/]*$ ]]; do
     if [ -e "${root}/.packer-version" ]; then
       echo "${root}/.packer-version"
       return 0
     fi
-    [ -n "${root}" ] || break
+    [ -n "$root" ] || break
     root="${root%/*}"
   done
   return 1
 }
 
-find_local_version_file "${PKENV_DIR}" || echo "${PKENV_ROOT}/version"
+find_local_version_file "$PKENV_DIR" || echo "${PKENV_ROOT}/version"
