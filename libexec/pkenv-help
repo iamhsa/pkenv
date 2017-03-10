@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-[ -n "$PKENV_DEBUG" ] && set -x
+
+[ -n "${PKENV_DEBUG}" ] && set -x
+
 echo "Usage: pkenv <command> [<options>]
 
 Commands:
-   install       Install a specific version of packer
+   install       Install a specific version of Packer
    use           Switch a version to use
    list          List all installed versions
    list-remote   List all installable versions
