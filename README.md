@@ -47,6 +47,12 @@ Switch a version to use
 $ pkenv use 0.12.3
 $ pkenv use latest
 $ pkenv use latest:^0.12
+
+```
+### pkenv uninstall
+Uninstall à specific version of Packer
+```sh
+$ pkenv uninstall 0.12.3
 ```
 
 ### pkenv list
