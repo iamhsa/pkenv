@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
 #
-# Summary: Run an executable with the selected packer version
+# Summary: Run an executable with the selected Packer version
 #
 # Usage: pkenv exec <command> [arg1 arg2...]
 #
-# Runs an executable by first preparing PATH so that the selected packer
+# Runs an executable by first preparing PATH so that the selected Packer
 # version's `bin' directory is at the front.
 #
-# For example, if the currently selected packer version is 0.12.2:
-#   pkenv exec build
+# For example, if the currently selected Packer version is 0.7.0:
+#   pkenv exec plan
 #
 # is equivalent to:
-#   PATH="$PKENV_ROOT/versions/0.12.2/bin:$PATH" packer build
+#   PATH="$PKENV_ROOT/versions/0.7.0/bin:$PATH" packer plan
 
 set -e
-[ -n "$PKENV_DEBUG" ] && set -x
+[ -n "${PKENV_DEBUG}" ] && set -x
 
-PKENV_VERSION="$(pkenv-version-name)"
-export PKENV_VERSION
-PK_BIN_PATH="${PKENV_ROOT}/versions/${PKENV_VERSION}/packer"
-export PATH="${PK_BIN_PATH}:${PATH}"
-"$PK_BIN_PATH" "$@"
+export PKENV_VERSION="$(pkenv-version-name)"
+TF_BIN_PATH="${PKENV_ROOT}/versions/${PKENV_VERSION}/packer"
+export PATH="${TF_BIN_PATH}:${PATH}"
+"${TF_BIN_PATH}" "${@}"

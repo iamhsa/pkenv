@@ -1,24 +1,41 @@
 #!/usr/bin/env bash
-# Summary: Show the current packer version
+# Summary: Show the current Packer version
 set -e
-[ -n "$PKENV_DEBUG" ] && set -x
+
+function error_and_die() {
+  echo -e "pkenv: ${0}: ${1}" >&2
+  exit 1
+}
+
+[ -n "${PKENV_DEBUG}" ] && set -x
+
+[ -d "${PKENV_ROOT}/versions" ] \
+  || error_and_die "No versions of packer installed. Please install one with: pkenv install"
 
 PKENV_VERSION_FILE="$(pkenv-version-file)"
-PKENV_VERSION="$(cat "$PKENV_VERSION_FILE" || true)"
+PKENV_VERSION="$(cat "${PKENV_VERSION_FILE}" || true)"
 
-if [ -z "$PKENV_VERSION" ]; then
-  echo "pkenv: version could not be resolved (set by $PKENV_VERSION_FILE or pkenv use <version>)" >&2
-  exit 1
+if [[ "${PKENV_VERSION}" =~ ^latest.*$ ]]; then
+  [[ "${PKENV_VERSION}" =~ ^latest\:.*$ ]] && regex="${PKENV_VERSION##*\:}"
+  version="$(\ls "${PKENV_ROOT}/versions" \
+    | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 \
+    | grep -e "${regex}" \
+    | head -n 1
+  )"
+  [ -n "${version}" ] || error_and_die "No installed versions of packer matched '${PKENV_VERSION}'"
+  PKENV_VERSION="${version}"
 fi
 
+[ -z "${PKENV_VERSION}" ] \
+  && error_and_die "Version could not be resolved (set by ${PKENV_VERSION_FILE} or pkenv use <version>)"
+
 version_exists() {
-  local version="$1"
+  local version="${1}"
   [ -d "${PKENV_ROOT}/versions/${version}" ]
 }
 
-if version_exists "$PKENV_VERSION"; then
-  echo "$PKENV_VERSION"
+if version_exists "${PKENV_VERSION}"; then
+  echo "${PKENV_VERSION}"
 else
-  echo "pkenv: version \`$PKENV_VERSION' is not installed (set by $PKENV_VERSION_FILE)" >&2
-  exit 1
+  error_and_die "version \`${PKENV_VERSION}' is not installed (set by ${PKENV_VERSION_FILE})"
 fi
