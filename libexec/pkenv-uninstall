@@ -7,7 +7,7 @@ function error_and_die() {
 
 [ -n "${PKENV_DEBUG}" ] && set -x
 
-[ ${#} -gt 1 ] && error_and_die "usage: pkenv install [<version>]"
+[ ${#} -gt 1 ] && error_and_die "usage: pkenv uninstall [<version>]"
 
 declare version_requested version regex
 
