@@ -16,7 +16,7 @@ function error_and_die() {
 source $(dirname $0)/helpers.sh \
   || error_and_die "Failed to load test helpers: $(dirname $0)/helpers.sh"
 
-echo "### Remove local versions"
+echo "### Uninstall local versions"
 cleanup || error_and_die "Cleanup failed?!"
 
 for v in 0.1.0; do

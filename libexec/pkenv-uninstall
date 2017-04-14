@@ -5,6 +5,10 @@ function error_and_die() {
   exit 1
 }
 
+function info() {
+  echo -e "\033[0;32m[INFO] ${1}\033[0;39m"
+}
+
 [ -n "${PKENV_DEBUG}" ] && set -x
 
 [ ${#} -gt 1 ] && error_and_die "usage: pkenv uninstall [<version>]"
@@ -37,8 +41,8 @@ version="$(pkenv-list | grep -e "${regex}" )"
 
 dst_path="${PKENV_ROOT}/versions/${version}"
 if [ -f ${dst_path}/packer ]; then 
-  echo "Uninstall Packer v${version}"
+  info "Uninstall Packer v${version}"
   rm -r ${dst_path}
-  echo -e "\033[0;32mPacker v${version} is successfully uninstalled\033[0;39m"
+  info "\033[0;32mPacker v${version} is successfully uninstalled\033[0;39m"
 fi
 
