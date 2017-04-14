@@ -12,10 +12,10 @@
 set -e
 [ -n "${PKENV_DEBUG}" ] && set -x
 
-version="0.2.2"
+version="0.2.3"
 git_revision=""
 
-if cd "${BASH_SOURCE%/*}" 2>/dev/null && git remote -v 2>/dev/null | grep -q zpkenv; then
+if cd "${BASH_SOURCE%/*}" 2>/dev/null && git remote -v 2>/dev/null | grep -q pkenv; then
   git_revision="$(git describe --tags HEAD 2>/dev/null || true)"
   git_revision="${git_revision#v}"
 fi

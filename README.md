@@ -23,6 +23,12 @@ Currently pkenv supports the following OSes
   OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
   ```sh
+  $ echo 'export PATH="$HOME/.pkenv/bin:$PATH"' >> ~/.bash_profile
+  ```
+
+  OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
+
+  ```sh
   ln -s ~/.pkenv/bin/* /usr/local/bin
   ``` 
 
@@ -36,6 +42,8 @@ $ pkenv install 0.7.0
 $ pkenv install latest
 $ pkenv install latest:^0.12
 ```
+
+If shasum is present in the path, pkenv will verify the download against Hashicorp's published sha256 hash. If [keybase](https://keybase.io/) is available in the path it will also verify the signature for those published hashes using hashicorp's published public key. 
 
 If you use [.packer-version](#packer-version), `pkenv install` (no argument) will install the version written in it.
 
@@ -59,6 +67,7 @@ $ pkenv uninstall 0.12.3
 List installed versions
 ```sh
 % pkenv list
+1.0.0
 0.12.3
 0.12.2
 0.7.5
@@ -91,14 +100,15 @@ $ cat .packer-version
 $ packer version
 Packer v0.12.2
 
-Your version of Packer is out of date! The latest version
-is 0.12.3. You can update by downloading from www.packer.io
+$ echo 0.12.0 > .packer-version
 
-$ echo 0.12.3 > .packer-version
+$ packer version
+Packer v0.12.0
 
-$ packer --version
+$ echo latest:^0.12 > .packer-version
+
+$ packer version
 Packer v0.12.3
-
 ```
 
 ## Upgrading

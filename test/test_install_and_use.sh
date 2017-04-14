@@ -36,6 +36,17 @@ v=$(pkenv list-remote | grep 0.8 | head -n 1)
   check_version ${v} || exit 1
 ) || error_and_proceed "Installing latest version ${v} with Regex"
 
+echo "### Install latest version with Regex"
+cleanup
+
+v=$(pkenv list-remote | grep 0.8 | head -n 1)
+pkenv install latest:^0.8
+pkenv use latest:^0.8
+if ! check_version ${v}; then
+  echo "Installing latest version ${v} with Regex" 1>&2
+  exit 1
+fi
+
 echo "### Install specific version"
 cleanup || error_and_die "Cleanup failed?!"
 
