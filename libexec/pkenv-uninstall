@@ -36,7 +36,7 @@ else
 fi
 
 [ -n "${version}" ] || error_and_die "Version is not specified"
-version="$(pkenv-list | grep -e "${regex}" )"
+version="$(pkenv-list | grep -e "${regex}" | head -n 1 )"
 [ -n "${version}" ] || error_and_die "No versions matching '${1}' found in local"
 
 dst_path="${PKENV_ROOT}/versions/${version}"
