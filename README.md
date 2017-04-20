@@ -59,8 +59,12 @@ $ pkenv use latest:^0.12
 ```
 ### pkenv uninstall
 Uninstall à specific version of Packer
+`latest` is a syntax to uninstall the latest version
+`latest:<regex>` is a syntax to uninstall latest version matching regex (used by grep -e)
 ```sh
-$ pkenv uninstall 0.12.3
+$ pkenv uninstall 0.7.0
+$ pkenv install latest
+$ pkenv install latest:^0.12
 ```
 
 ### pkenv list
