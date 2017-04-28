@@ -30,11 +30,11 @@ Currently pkenv supports the following OSes
 
   ```sh
   ln -s ~/.pkenv/bin/* /usr/local/bin
-  ``` 
+  ```
 
 ## Usage
 ### pkenv install
-Install a specific version of Packer  
+Install a specific version of Packer
 `latest` is a syntax to install latest version
 `latest:<regex>` is a syntax to install latest version matching regex (used by grep -e)
 ```sh
@@ -43,7 +43,7 @@ $ pkenv install latest
 $ pkenv install latest:^0.12
 ```
 
-If shasum is present in the path, pkenv will verify the download against Hashicorp's published sha256 hash. If [keybase](https://keybase.io/) is available in the path it will also verify the signature for those published hashes using hashicorp's published public key. 
+If shasum is present in the path, pkenv will verify the download against Hashicorp's published sha256 hash. If [keybase](https://keybase.io/) is available in the path it will also verify the signature for those published hashes using hashicorp's published public key.
 
 If you use [.packer-version](#packer-version), `pkenv install` (no argument) will install the version written in it.
 

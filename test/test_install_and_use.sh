@@ -65,7 +65,7 @@ echo "latest:^0.8" > ./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
-) || error_and_proceed "Installing .packer-version ${v}" 
+) || error_and_proceed "Installing .packer-version ${v}"
 
 echo "### Install invalid specific version"
 cleanup || error_and_die "Cleanup failed?!"

@@ -40,7 +40,7 @@ version="$(pkenv-list | grep -e "${regex}" | head -n 1 )"
 [ -n "${version}" ] || error_and_die "No versions matching '${1}' found in local"
 
 dst_path="${PKENV_ROOT}/versions/${version}"
-if [ -f ${dst_path}/packer ]; then 
+if [ -f ${dst_path}/packer ]; then
   info "Uninstall Packer v${version}"
   rm -r ${dst_path}
   info "\033[0;32mPacker v${version} is successfully uninstalled\033[0;39m"
