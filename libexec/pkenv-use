@@ -5,6 +5,10 @@ function error_and_die() {
   exit 1
 }
 
+function info() {
+  echo -e "\033[0;32m[INFO] ${1}\033[0;39m"
+}
+
 [ -n "${PKENV_DEBUG}" ] && set -x
 
 [ ${#} -ne 1 ] && error_and_die "usage: pkenv use <version>"
@@ -41,5 +45,7 @@ target_path=${PKENV_ROOT}/versions/${version}
 [ -x ${target_path}/packer ] \
   || error_and_die "Version directory for ${version} is present, but the packer binary is not executable! Manual intervention required. "
 
+info "Switching to v${version}"
 echo "${version}" > "${PKENV_ROOT}/version"
-packer version || error_and_die "'packer version' failed. Something is seriously wrong"
+packer version 1>/dev/null || error_and_die "'packer version' failed. Something is seriously wrong"
+info "Switching completed"
