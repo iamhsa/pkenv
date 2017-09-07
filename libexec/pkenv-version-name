@@ -2,12 +2,8 @@
 # Summary: Show the current Packer version
 set -e
 
-function error_and_die() {
-  echo -e "pkenv: ${0}: ${1}" >&2
-  exit 1
-}
-
 [ -n "${PKENV_DEBUG}" ] && set -x
+source ${PKENV_ROOT}/libexec/helpers
 
 [ -d "${PKENV_ROOT}/versions" ] \
   || error_and_die "No versions of packer installed. Please install one with: pkenv install"

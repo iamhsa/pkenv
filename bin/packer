@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-[ -n "${PKENV_DEBUG}" ] && set -x
+[ -n "$PKENV_DEBUG" ] && set -x
 
 program="${0##*/}"
-exec pkenv exec "${@}"
+exec pkenv exec "$@"

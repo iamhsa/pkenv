@@ -19,16 +19,16 @@ source $(dirname $0)/helpers.sh \
 echo "### List local versions"
 cleanup || error_and_die "Cleanup failed?!"
 
-for v in 0.9.0-rc2 0.9.0 0.10.1 0.12.3; do
+for v in 0.9.0 0.10.1 0.12.3 1.0.1; do
   pkenv install ${v} || error_and_proceed "Install of version ${v} failed"
 done
 
 result=$(pkenv list)
 expected="$(cat << EOS
+1.0.1
 0.12.3
 0.10.1
 0.9.0
-0.9.0-rc2
 EOS
 )"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-if [ -n "${PKENV_DEBUG}" ]; then
+if [ -n "$PKENV_DEBUG" ]; then
   export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
   set -x
 fi
@@ -10,7 +10,7 @@ readlink_f() {
   local target_file=$1
   local file_name
 
-  while [ "${target_file}" != "" ]; do
+  while [ "$target_file" != "" ]; do
     cd $(dirname ${target_file})
     file_name=$(basename ${target_file})
     target_file=$(readlink ${file_name})
@@ -53,11 +53,11 @@ case "$command" in
 * )
   command_path="$(command -v "pkenv-${command}" || true)"
   if [ -z "$command_path" ];then
-    { echo "no such command '${command}'"
+    { echo "no such command '$command'"
       pkenv-help
     } | abort
   fi
   shift 1
-  exec "${command_path}" "${@}"
+  exec "$command_path" "$@"
   ;;
 esac

@@ -23,7 +23,7 @@ v=0.1.0
 (
   pkenv install ${v} || exit 1
   pkenv uninstall ${v} || exit 1
-  pkenv list | grep 0.1.0 && exit 1 || exit 0
+  pkenv list | grep ${v} && exit 1 || exit 0
 ) || error_and_proceed "Uninstall of version ${v} failed"
 
 echo "### Uninstall latest version"

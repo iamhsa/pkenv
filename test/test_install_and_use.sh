@@ -27,15 +27,14 @@ v=$(pkenv list-remote | head -n 1)
 ) || error_and_proceed "Installing latest version ${v}"
 
 echo "### Install latest version with Regex"
-cleanup
+cleanup || error_and_die "Cleanup failed?!"
 
 v=$(pkenv list-remote | grep 0.12 | head -n 1)
-pkenv install latest:^0.12
-pkenv use latest:^0.12
-if ! check_version ${v}; then
-  echo "Installing latest version ${v} with Regex" 1>&2
-  exit 1
-fi
+(
+  pkenv install latest:^0.12 || exit 1
+  pkenv use latest:^0.12 || exit 1
+  check_version ${v} || exit 1
+) || error_and_proceed "Installing latest version ${v} with Regex"
 
 echo "### Install specific version"
 cleanup || error_and_die "Cleanup failed?!"
@@ -65,7 +64,7 @@ echo "latest:^0.8" > ./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
-) || error_and_proceed "Installing .packer-version ${v}"
+) || error_and_proceed "Installing .packer-version ${v}" 
 
 echo "### Install invalid specific version"
 cleanup || error_and_die "Cleanup failed?!"
