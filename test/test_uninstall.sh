@@ -23,7 +23,7 @@ v=0.1.0
 (
   pkenv install ${v} || exit 1
   pkenv uninstall ${v} || exit 1
-  pkenv list | grep ${v} && exit 1 || exit 0
+  check_version ${v} && exit 1 || exit 0
 ) || error_and_proceed "Uninstall of version ${v} failed"
 
 echo "### Uninstall latest version"
@@ -33,7 +33,7 @@ v=$(pkenv list-remote | head -n 1)
 (
   pkenv install latest || exit 1
   pkenv uninstall latest || exit 1
-  pkenv list | grep ${v} && exit 1 || exit 0
+  check_version ${v} && exit 1 || exit 0
 ) || error_and_proceed "Uninstalling latest version ${v}"
 
 echo "### Uninstall latest version with Regex"
@@ -43,7 +43,7 @@ v=$(pkenv list-remote | grep 0.8 | head -n 1)
 (
   pkenv install latest:^0.8 || exit 1
   pkenv uninstall latest:^0.8 || exit 1
-  pkenv list | grep ${v} && exit 1 || exit 0
+  check_version ${v} && exit 1 || exit 0
 ) || error_and_proceed "Uninstalling latest version ${v} with Regex"
 
 if [ ${#errors[@]} -gt 0 ]; then

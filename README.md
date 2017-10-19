@@ -29,7 +29,7 @@ Currently pkenv supports the following OSes
   OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
   ```sh
-  ln -s ~/.pkenv/bin/* /usr/local/bin
+  $ ln -s ~/.pkenv/bin/* /usr/local/bin
   ```
 
 ## Usage
@@ -47,6 +47,14 @@ If shasum is present in the path, pkenv will verify the download against Hashico
 
 If you use [.packer-version](#packer-version), `pkenv install` (no argument) will install the version written in it.
 
+### Specify architecture
+
+Architecture other than the default amd64 can be specified with the `PKENV_ARCH` environment variable
+
+```sh
+PKENV_ARCH=arm pkenv install 0.7.9
+```
+
 ### pkenv use
 Switch a version to use
 `latest` is a syntax to use the latest installed version
@@ -58,25 +66,24 @@ $ pkenv use latest:^0.12
 
 ```
 ### pkenv uninstall
-Uninstall à specific version of Packer
-`latest` is a syntax to uninstall the latest version
+Uninstall a specific version of Packer
+`latest` is a syntax to uninstall latest version
 `latest:<regex>` is a syntax to uninstall latest version matching regex (used by grep -e)
 ```sh
 $ pkenv uninstall 0.7.0
-$ pkenv install latest
-$ pkenv install latest:^0.12
+$ pkenv uninstall latest
+$ pkenv uninstall latest:^0.8
 ```
 
 ### pkenv list
 List installed versions
 ```sh
 % pkenv list
-1.0.0
-0.12.3
-0.12.2
-0.7.5
-0.7.2
-0.6.1
+* 1.1.1 (set by /opt/pkenv-build/work/pkenv/version)
+  0.12.3
+  0.12.2
+  0.7.5
+  0.6.1
 ```
 
 ### pkenv list-remote
@@ -95,7 +102,7 @@ List installable versions
 ```
 
 ## .packer-version
-If you put `.packer-version` file on your project root, pkenv detects it and use the version written in it.
+If you put `.packer-version` file on your project root, or in your home directory, pkenv detects it and use the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
 
 ```sh
 $ cat .packer-version

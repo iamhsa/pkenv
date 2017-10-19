@@ -22,7 +22,6 @@ cleanup || error_and_die "Cleanup failed?!"
 v=$(pkenv list-remote | head -n 1)
 (
   pkenv install latest || exit 1
-  pkenv use ${v} || exit 1
   check_version ${v} || exit 1
 ) || error_and_proceed "Installing latest version ${v}"
 
@@ -32,7 +31,6 @@ cleanup || error_and_die "Cleanup failed?!"
 v=$(pkenv list-remote | grep 0.12 | head -n 1)
 (
   pkenv install latest:^0.12 || exit 1
-  pkenv use latest:^0.12 || exit 1
   check_version ${v} || exit 1
 ) || error_and_proceed "Installing latest version ${v} with Regex"
 
@@ -42,7 +40,6 @@ cleanup || error_and_die "Cleanup failed?!"
 v=0.10.1
 (
   pkenv install ${v} || exit 1
-  pkenv use ${v} || exit 1
   check_version ${v} || exit 1
 ) || error_and_proceed "Installing specific version ${v}"
 
@@ -64,7 +61,39 @@ echo "latest:^0.8" > ./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
-) || error_and_proceed "Installing .packer-version ${v}" 
+) || error_and_proceed "Installing .packer-version ${v}"
+
+echo "### Install with ${HOME}/.packer-version"
+cleanup || error_and_die "Cleanup failed?!"
+
+if [ -f ${HOME}/.packer-version ]; then
+  mv ${HOME}/.packer-version ${HOME}/.packer-version.bup
+fi
+v=$(pkenv list-remote | head -n 2 | tail -n 1)
+echo "${v}" > ${HOME}/.packer-version
+(
+  pkenv install || exit 1
+  check_version ${v} || exit 1
+) || error_and_proceed "Installing ${HOME}/.packer-version ${v}"
+
+echo "### Install with parameter and use ~/.packer-version"
+v=$(pkenv list-remote | head -n 1)
+(
+  pkenv install ${v} || exit 1
+  check_version ${v} || exit 1
+) || error_and_proceed "Use $HOME/.packer-version ${v}"
+
+echo "### Use with parameter and  ~/.packer-version"
+v=$(pkenv list-remote | head -n 2 | tail -n 1)
+(
+  pkenv use ${v} || exit 1
+  check_version ${v} || exit 1
+) || error_and_proceed "Use $HOME/.packer-version ${v}"
+
+rm $HOME/.packer-version
+if [ -f $HOME/.packer-version.bup ]; then
+  mv $HOME/.packer-version.bup $HOME/.packer-version
+fi
 
 echo "### Install invalid specific version"
 cleanup || error_and_die "Cleanup failed?!"

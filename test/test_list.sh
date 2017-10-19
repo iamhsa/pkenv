@@ -25,10 +25,10 @@ done
 
 result=$(pkenv list)
 expected="$(cat << EOS
-1.0.1
-0.12.3
-0.10.1
-0.9.0
+* 1.0.1 (set by $(pkenv version-file))
+  0.12.3
+  0.10.1
+  0.9.0
 EOS
 )"
 

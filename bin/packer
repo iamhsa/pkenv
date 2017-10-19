@@ -3,4 +3,4 @@ set -e
 [ -n "$PKENV_DEBUG" ] && set -x
 
 program="${0##*/}"
-exec pkenv exec "$@"
+exec "$(dirname `which $0`)"/pkenv exec "$@"

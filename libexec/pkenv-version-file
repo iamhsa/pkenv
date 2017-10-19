@@ -17,4 +17,4 @@ find_local_version_file() {
   return 1
 }
 
-find_local_version_file "${PKENV_DIR}" || echo "${PKENV_ROOT}/version"
+find_local_version_file "${PKENV_DIR}" || find_local_version_file "${HOME}" || echo "${PKENV_ROOT}/version"
