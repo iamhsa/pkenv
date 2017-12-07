@@ -8,6 +8,15 @@ Currently pkenv supports the following OSes
 - Linux (64bit) (tested)
 
 ## Installation
+On Mac OS X, you can install pkenv with [Homebrew](http://brew.sh/):
+
+```
+$ brew tap kwilczynski/homebrew-pkenv
+$ brew install pkenv
+```
+
+On any other platform, you can install pkenv as follows:
+
 1. Check out pkenv into any path (here is `${HOME}/.pkenv`)
 
   ```sh
