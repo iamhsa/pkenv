@@ -45,6 +45,12 @@ case "$(uname -s)" in
   MINGW64*)
     os="windows_${PKENV_ARCH}"
     ;;
+  MSYS_NT*)
+    os="windows_${PKENV_ARCH}"
+    ;;
+  CYGWIN_NT*)
+    os="windows_${PKENV_ARCH}"
+    ;;
   *)
     os="linux_${PKENV_ARCH}"
     ;;
