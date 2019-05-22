@@ -53,6 +53,20 @@ echo ${v} > ./.packer-version
   check_version ${v} || exit 1
 ) || error_and_proceed "Installing .packer-version ${v}"
 
+echo "### Install specific .packer-version in path with spaces"
+cleanup || error_and_die "Cleanup failed?!"
+
+v=1.4.0
+wdir="project with spaces"
+mkdir "${wdir}"
+cd "${wdir}"
+echo ${v} > ./.packer-version
+(
+  pkenv install || exit 1
+  check_version ${v} || exit 1
+) || error_and_proceed "Installing specific .packer-version ${v} in path with space"
+cd .. && rm -rf "${wdir}"
+
 echo "### Install latest:<regex> .packer-version"
 cleanup || error_and_die "Cleanup failed?!"
 
