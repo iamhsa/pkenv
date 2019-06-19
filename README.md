@@ -127,7 +127,7 @@ Packer v0.12.3
 
 ## Upgrading
 ```sh
-$ git --git-dir=~/.pkenv/.git pull
+$ git --git-dir=${HOME}/.pkenv/.git pull
 ```
 
 ## Uninstalling
