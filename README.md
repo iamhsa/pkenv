@@ -32,12 +32,6 @@ On any other platform, you can install pkenv as follows:
   OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
   ```sh
-  $ echo 'export PATH="$HOME/.pkenv/bin:$PATH"' >> ~/.bash_profile
-  ```
-
-  OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
-
-  ```sh
   $ ln -s ~/.pkenv/bin/* /usr/local/bin
   ```
 
