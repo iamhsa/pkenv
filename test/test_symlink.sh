@@ -22,10 +22,10 @@ ln -s ${PWD}/bin/* ${PKENV_BIN_DIR}
 export PATH="${PKENV_BIN_DIR}:${PATH}"
 
 echo "### Test supporting symlink"
+v="1.3.3"
 cleanup || error_and_die "Cleanup failed?!"
-pkenv install 0.8.2 || error_and_proceed "Install failed"
-pkenv use 0.8.2 || error_and_proceed "Use failed"
-check_version 0.8.2 || error_and_proceed "Version check failed"
+pkenv install "${v}" || error_and_proceed "Install failed"
+check_version "${v}" || error_and_proceed "Version check failed"
 
 if [ ${#errors[@]} -gt 0 ]; then
   echo -e "\033[0;31m===== The following symlink tests failed =====\033[0;39m" >&2

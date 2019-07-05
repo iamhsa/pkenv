@@ -19,7 +19,7 @@ source $(dirname $0)/helpers.sh \
 echo "### Uninstall local versions"
 cleanup || error_and_die "Cleanup failed?!"
 
-v=0.1.0
+v=1.0.0
 (
   pkenv install ${v} || exit 1
   pkenv uninstall ${v} || exit 1
@@ -39,10 +39,10 @@ v=$(pkenv list-remote | head -n 1)
 echo "### Uninstall latest version with Regex"
 cleanup || error_and_die "Cleanup failed?!"
 
-v=$(pkenv list-remote | grep 0.8 | head -n 1)
+v=$(pkenv list-remote | grep 1.2 | head -n 1)
 (
-  pkenv install latest:^0.8 || exit 1
-  pkenv uninstall latest:^0.8 || exit 1
+  pkenv install latest:^1.2 || exit 1
+  pkenv uninstall latest:^1.2 || exit 1
   check_version ${v} && exit 1 || exit 0
 ) || error_and_proceed "Uninstalling latest version ${v} with Regex"
 
