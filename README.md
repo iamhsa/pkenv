@@ -5,7 +5,9 @@
 
 ## Support
 Currently pkenv supports the following OSes
-- Linux (64bit) (tested)
+- Linux (64bit)
+- Mac OS X (64bit)
+- Arm
 
 ## Installation
 On Mac OS X, you can install pkenv with [Homebrew](http://brew.sh/):
@@ -81,7 +83,7 @@ $ pkenv uninstall latest:^0.8
 ### pkenv list
 List installed versions
 ```sh
-% pkenv list
+$ pkenv list
 * 1.1.1 (set by /opt/pkenv-build/work/pkenv/version)
   0.12.3
   0.12.2
@@ -92,7 +94,7 @@ List installed versions
 ### pkenv list-remote
 List installable versions
 ```sh
-% pkenv list-remote
+$ pkenv list-remote
 0.12.3
 0.12.2
 0.12.1
