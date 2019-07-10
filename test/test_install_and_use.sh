@@ -37,7 +37,7 @@ v=$(pkenv list-remote | grep 0.12 | head -n 1)
 echo "### Install specific version"
 cleanup || error_and_die "Cleanup failed?!"
 
-v=0.10.1
+v=1.0.1
 (
   pkenv install ${v} || exit 1
   check_version ${v} || exit 1
@@ -46,7 +46,7 @@ v=0.10.1
 echo "### Install specific .packer-version"
 cleanup || error_and_die "Cleanup failed?!"
 
-v=0.9.0
+v=1.2.0
 echo ${v} > ./.packer-version
 (
   pkenv install || exit 1
@@ -70,8 +70,8 @@ cd .. && rm -rf "${wdir}"
 echo "### Install latest:<regex> .packer-version"
 cleanup || error_and_die "Cleanup failed?!"
 
-v=$(pkenv list-remote | grep -e '^0.8' | head -n 1)
-echo "latest:^0.8" > ./.packer-version
+v=$(pkenv list-remote | grep -e '^1.1' | head -n 1)
+echo "latest:^1.1" > ./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
