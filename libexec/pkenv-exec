@@ -17,6 +17,6 @@ set -e
 [ -n "${PKENV_DEBUG}" ] && set -x
 
 export PKENV_VERSION="$(pkenv-version-name)"
-TF_BIN_PATH="${PKENV_ROOT}/versions/${PKENV_VERSION}/packer"
-export PATH="${TF_BIN_PATH}:${PATH}"
-"${TF_BIN_PATH}" "${@}"
+PK_BIN_PATH="${PKENV_ROOT}/versions/${PKENV_VERSION}/packer"
+export PATH="${PK_BIN_PATH}:${PATH}"
+"${PK_BIN_PATH}" "${@}"

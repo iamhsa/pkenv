@@ -2,3 +2,5 @@ versions/
 version
 .packer-version
 bin/packer-*
+/use-gnupg
+/use-gpgv
