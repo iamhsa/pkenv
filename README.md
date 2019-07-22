@@ -22,19 +22,19 @@ On any other platform, you can install pkenv as follows:
 1. Check out pkenv into any path (here is `${HOME}/.pkenv`)
 
   ```sh
-  $ git clone https://github.com/iamhsa/pkenv.git ~/.pkenv
+  $ git clone https://github.com/iamhsa/pkenv.git ${HOME}/.pkenv
   ```
 
-2. Add `~/.pkenv/bin` to your `$PATH` any way you like
+2. Add `${HOME}/.pkenv/bin` to your `$PATH` any way you like
 
   ```sh
-  $ echo 'export PATH="$HOME/.pkenv/bin:$PATH"' >> ~/.bash_profile
+  $ echo 'export PATH="${HOME}/.pkenv/bin:$PATH"' >> ${HOME}/.bash_profile
   ```
 
   OR you can make symlinks for `pkenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
   ```sh
-  $ ln -s ~/.pkenv/bin/* /usr/local/bin
+  $ ln -s ${HOME}/.pkenv/bin/* /usr/local/bin
   ```
 
 ## Usage
@@ -134,7 +134,7 @@ $ git --git-dir=${HOME}/.pkenv/.git pull
 
 ## Uninstalling
 ```sh
-$ rm -rf /some/path/to/pkenv
+$ rm -rf ${HOME}/.pkenv
 ```
 
 ## LICENSE
