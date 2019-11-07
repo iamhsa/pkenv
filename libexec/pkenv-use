@@ -39,5 +39,5 @@ target_path=${PKENV_ROOT}/versions/${version}
 
 info "Switching to v${version}"
 echo "${version}" > "$(pkenv-version-file)" || error_and_die "'switch to v${version} failed'"
-packer version 1>/dev/null || error_and_die "'packer version' failed. Something is seriously wrong"
+${PKENV_ROOT}/bin/packer version 1>/dev/null || error_and_die "'packer version' failed. Something is seriously wrong"
 info "Switching completed"
