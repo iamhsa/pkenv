@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2119
 set -e
 if [ -n "$PKENV_DEBUG" ]; then
   export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
@@ -11,16 +12,16 @@ readlink_f() {
   local file_name
 
   while [ "$target_file" != "" ]; do
-    cd $(dirname ${target_file})
-    file_name=$(basename ${target_file})
-    target_file=$(readlink ${file_name})
+    cd "$(dirname "${target_file}")"
+    file_name=$(basename "${target_file}")
+    target_file=$(readlink "${file_name}")
   done
 
-  echo $(pwd -P)/${file_name}
+  echo "$(pwd -P)/${file_name}"
 }
 
 if [ -z "${PKENV_ROOT}" ]; then
-  PKENV_ROOT=$(cd $(dirname $(readlink_f $0))/.. && pwd)
+  PKENV_ROOT=$(cd "$(dirname "$(readlink_f "$0")")"/.. && pwd)
 else
   PKENV_ROOT="${PKENV_ROOT%/}"
 fi
@@ -29,6 +30,7 @@ PATH="${PKENV_ROOT}/libexec:${PATH}"
 export PATH
 export PKENV_DIR="${PWD}"
 
+# shellcheck disable=SC2120
 abort() {
   {
     if [ "$#" -eq 0 ]; then

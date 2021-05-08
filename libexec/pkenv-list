@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 [ -n "${PKENV_DEBUG}" ] && set -x
-source ${PKENV_ROOT}/libexec/helpers
+# shellcheck source=./libexec/helpers
+source "${PKENV_ROOT}/libexec/helpers"
 
 [ ${#} -ne 0 ] &&
   error_and_die "usage: pkenv list"
@@ -20,6 +21,7 @@ print_version() {
   fi
 }
 
-for local_version in $(ls -1 "${PKENV_ROOT}/versions" | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3); do
-  print_version ${local_version}
+# shellcheck disable=SC2012
+for local_version in $(ls -1 "${PKENV_ROOT}/versions/" | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3); do
+  print_version "${local_version}"
 done

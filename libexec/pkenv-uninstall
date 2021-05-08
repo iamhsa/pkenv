@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
 [ -n "${PKENV_DEBUG}" ] && set -x
-source ${PKENV_ROOT}/libexec/helpers
+# shellcheck source=./libexec/helpers
+source "${PKENV_ROOT}/libexec/helpers"
 
 [ ${#} -gt 1 ] && error_and_die "usage: pkenv uninstall [<version>]"
 
 declare version_requested version regex
 
-get_version_requested ${1}
+get_version_requested "${1}"
 
-if [[ ${version_requested} =~ ^latest\:.*$ ]]; then
+if [[ ${version_requested} =~ ^latest:.*$ ]]; then
   version="${version_requested%%\:*}"
   regex="${version_requested##*\:}"
 elif [[ ${version_requested} =~ ^latest$ ]]; then
@@ -28,5 +29,5 @@ dst_path="${PKENV_ROOT}/versions/${version}"
 if [ -f "${dst_path}/packer" ]; then
   info "Uninstall Packer v${version}"
   rm -r "${dst_path}"
-  info "\033[0;32mPacker v${version} is successfully uninstalled\033[0;39m"
+  info "Packer v${version} is successfully uninstalled"
 fi

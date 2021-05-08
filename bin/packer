@@ -2,5 +2,5 @@
 set -e
 [ -n "$PKENV_DEBUG" ] && set -x
 
-program="${0##*/}"
-exec "$(dirname $(command -v $0))"/pkenv exec "$@"
+#program="${0##*/}"
+exec "$(dirname "$(command -v "$0")")"/pkenv exec "$@"

@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -e
 [ -n "${PKENV_DEBUG}" ] && set -x
-source ${PKENV_ROOT}/libexec/helpers
+# shellcheck source=./libexec/helpers
+source "${PKENV_ROOT}/libexec/helpers"
 
 if [ ${#} -ne 0 ]; then
   echo "usage: pkenv list-remote" 1>&2
   exit 1
 fi
 
-curlw -sf https://releases.hashicorp.com/packer/ | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+(-(rc|beta)[0-9]+)?" | uniq
+curlw -sf https://releases.hashicorp.com/packer/ | grep -o -E '[0-9]+\.[0-9]+\.[0-9]+(-(rc|beta)[0-9]+)?' | uniq

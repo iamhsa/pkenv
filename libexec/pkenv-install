@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
 [ -n "${PKENV_DEBUG}" ] && set -x
-source ${PKENV_ROOT}/libexec/helpers
+# shellcheck source=./libexec/helpers
+source "${PKENV_ROOT}/libexec/helpers"
 
 [ "${#}" -gt 1 ] && error_and_die "usage: pkenv install [<version>]"
 
 declare version_requested version regex
 
-get_version_requested ${1}
+get_version_requested "${1}"
 
-if [[ ${version_requested} =~ ^latest\:.*$ ]]; then
+if [[ ${version_requested} =~ ^latest:.*$ ]]; then
   version="${version_requested%%\:*}"
   regex="${version_requested##*\:}"
 elif [[ ${version_requested} =~ ^latest$ ]]; then
   version="${version_requested}"
-  regex="^[0-9]\+\.[0-9]\+\.[0-9]\+$"
+  regex="^[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+$"
 else
   version="${version_requested}"
   regex="^${version_requested}$"
@@ -61,7 +62,7 @@ info "Installing Packer v${version}"
 # Create a local temporary directory for downloads
 download_tmp="$(mktemp -d pkenv_download.XXXXXX)" || error_and_die "Unable to create temporary download directory in $(pwd)"
 # Clean it up in case of error
-trap "rm -rf ${download_tmp}" EXIT
+trap 'rm -rf ${download_tmp}' EXIT
 
 info "Downloading release tarball from ${version_url}/${tarball_name}"
 curlw -# -f -o "${download_tmp}/${tarball_name}" "${version_url}/${tarball_name}" || error_and_die "Tarball download failed"
@@ -139,7 +140,7 @@ fi
 
 if [[ -n ${shasum_bin} && -x ${shasum_bin} ]]; then
   (
-    cd "${download_tmp}"
+    cd "${download_tmp}" || error_and_die "Directory does not exist ${download_tmp}"
     "${shasum_bin}" \
       -a 256 \
       -s \
