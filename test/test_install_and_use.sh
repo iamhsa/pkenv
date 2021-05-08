@@ -13,8 +13,8 @@ function error_and_die() {
 }
 
 [ -n "$PKENV_DEBUG" ] && set -x
-source $(dirname $0)/helpers.sh \
-  || error_and_die "Failed to load test helpers: $(dirname $0)/helpers.sh"
+source $(dirname $0)/helpers.sh ||
+  error_and_die "Failed to load test helpers: $(dirname $0)/helpers.sh"
 
 echo "### Install latest version"
 cleanup || error_and_die "Cleanup failed?!"
@@ -47,7 +47,7 @@ echo "### Install specific .packer-version"
 cleanup || error_and_die "Cleanup failed?!"
 
 v=1.2.0
-echo ${v} > ./.packer-version
+echo ${v} >./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
@@ -60,7 +60,7 @@ v=1.4.0
 wdir="project with spaces"
 mkdir "${wdir}"
 cd "${wdir}"
-echo ${v} > ./.packer-version
+echo ${v} >./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
@@ -71,7 +71,7 @@ echo "### Install latest:<regex> .packer-version"
 cleanup || error_and_die "Cleanup failed?!"
 
 v=$(pkenv list-remote | grep -e '^1.1' | head -n 1)
-echo "latest:^1.1" > ./.packer-version
+echo "latest:^1.1" >./.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
@@ -84,7 +84,7 @@ if [ -f ${HOME}/.packer-version ]; then
   mv ${HOME}/.packer-version ${HOME}/.packer-version.bup
 fi
 v=$(pkenv list-remote | head -n 2 | tail -n 1)
-echo "${v}" > ${HOME}/.packer-version
+echo "${v}" >${HOME}/.packer-version
 (
   pkenv install || exit 1
   check_version ${v} || exit 1
@@ -114,16 +114,16 @@ cleanup || error_and_die "Cleanup failed?!"
 
 v=9.9.9
 expected_error_message="No versions matching '${v}' found in remote"
-[ -z "$(pkenv install ${v} 2>&1 | grep "${expected_error_message}")" ] \
-  && error_and_proceed "Installing invalid version ${v}"
+[ -z "$(pkenv install ${v} 2>&1 | grep "${expected_error_message}")" ] &&
+  error_and_proceed "Installing invalid version ${v}"
 
 echo "### Install invalid latest:<regex> version"
 cleanup || error_and_die "Cleanup failed?!"
 
 v="latest:word"
 expected_error_message="No versions matching '${v}' found in remote"
-[ -z "$(pkenv install ${v} 2>&1 | grep "${expected_error_message}")" ] \
-  && error_and_proceed "Installing invalid version ${v}"
+[ -z "$(pkenv install ${v} 2>&1 | grep "${expected_error_message}")" ] &&
+  error_and_proceed "Installing invalid version ${v}"
 
 if [ ${#errors[@]} -gt 0 ]; then
   echo -e "\033[0;31m===== The following install_and_use tests failed =====\033[0;39m" >&2
@@ -133,5 +133,5 @@ if [ ${#errors[@]} -gt 0 ]; then
   exit 1
 else
   echo -e "\033[0;32mAll install_and_use tests passed.\033[0;39m"
-fi;
+fi
 exit 0

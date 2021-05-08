@@ -6,7 +6,7 @@ set -e
 
 find_local_version_file() {
   local root="${1}"
-  while ! [[ "${root}" =~ ^//[^/]*$ ]]; do
+  while ! [[ ${root} =~ ^//[^/]*$ ]]; do
     if [ -e "${root}/.packer-version" ]; then
       echo "${root}/.packer-version"
       return 0

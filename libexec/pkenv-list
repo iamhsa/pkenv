@@ -3,23 +3,23 @@
 [ -n "${PKENV_DEBUG}" ] && set -x
 source ${PKENV_ROOT}/libexec/helpers
 
-[ ${#} -ne 0 ] \
-  && error_and_die "usage: pkenv list"
+[ ${#} -ne 0 ] &&
+  error_and_die "usage: pkenv list"
 
-[ -d "${PKENV_ROOT}/versions" ] \
-  || error_and_die "No versions available. Please install one with: pkenv install"
+[ -d "${PKENV_ROOT}/versions" ] ||
+  error_and_die "No versions available. Please install one with: pkenv install"
 
-[[ -x "${PKENV_ROOT}/versions" && -r "${PKENV_ROOT}/versions" ]] \
-  || error_and_die "pkenv versions directory is inaccessible!"
+[[ -x "${PKENV_ROOT}/versions" && -r "${PKENV_ROOT}/versions" ]] ||
+  error_and_die "pkenv versions directory is inaccessible!"
 
-print_version () {
-    if [ "$1" == "$(pkenv-version-name)" ]; then
-        echo "* $1 (set by $(pkenv-version-file))"
-    else
-        echo "  $1"
-    fi
+print_version() {
+  if [ "$1" == "$(pkenv-version-name)" ]; then
+    echo "* $1 (set by $(pkenv-version-file))"
+  else
+    echo "  $1"
+  fi
 }
 
 for local_version in $(ls -1 "${PKENV_ROOT}/versions" | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3); do
-    print_version ${local_version}
+  print_version ${local_version}
 done

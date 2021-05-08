@@ -5,25 +5,26 @@ set -e
 [ -n "${PKENV_DEBUG}" ] && set -x
 source ${PKENV_ROOT}/libexec/helpers
 
-[ -d "${PKENV_ROOT}/versions" ] \
-  || error_and_die "No versions of packer installed. Please install one with: pkenv install"
+[ -d "${PKENV_ROOT}/versions" ] ||
+  error_and_die "No versions of packer installed. Please install one with: pkenv install"
 
 PKENV_VERSION_FILE="$(pkenv-version-file)"
 PKENV_VERSION="$(cat "${PKENV_VERSION_FILE}" || true)"
 
-if [[ "${PKENV_VERSION}" =~ ^latest.*$ ]]; then
-  [[ "${PKENV_VERSION}" =~ ^latest\:.*$ ]] && regex="${PKENV_VERSION##*\:}"
-  version="$(\ls "${PKENV_ROOT}/versions" \
-    | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 \
-    | grep -e "${regex}" \
-    | head -n 1
+if [[ ${PKENV_VERSION} =~ ^latest.*$ ]]; then
+  [[ ${PKENV_VERSION} =~ ^latest\:.*$ ]] && regex="${PKENV_VERSION##*\:}"
+  version="$(
+    \ls "${PKENV_ROOT}/versions" |
+      sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 |
+      grep -e "${regex}" |
+      head -n 1
   )"
   [ -n "${version}" ] || error_and_die "No installed versions of packer matched '${PKENV_VERSION}'"
   PKENV_VERSION="${version}"
 fi
 
-[ -z "${PKENV_VERSION}" ] \
-  && error_and_die "Version could not be resolved (set by ${PKENV_VERSION_FILE} or pkenv use <version>)"
+[ -z "${PKENV_VERSION}" ] &&
+  error_and_die "Version could not be resolved (set by ${PKENV_VERSION_FILE} or pkenv use <version>)"
 
 version_exists() {
   local version="${1}"

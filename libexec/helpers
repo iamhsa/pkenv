@@ -14,7 +14,7 @@ function info() {
 }
 
 # Curl wrapper to switch TLS option for each OS
-function curlw () {
+function curlw() {
   local TLS_OPT="--tlsv1.2"
 
   # Check if curl is 10.12.6 or above
@@ -25,10 +25,10 @@ function curlw () {
   curl ${TLS_OPT} "$@"
 }
 
-function get_version_requested () {
+function get_version_requested() {
   if [ -z "${1}" ]; then
     version_file="$(pkenv-version-file)"
-    if [ "${version_file}" != "${PKENV_ROOT}/version" ];then
+    if [ "${version_file}" != "${PKENV_ROOT}/version" ]; then
       version_requested="$(cat "${version_file}" || true)"
     fi
   else

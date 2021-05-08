@@ -30,8 +30,11 @@ export PATH
 export PKENV_DIR="${PWD}"
 
 abort() {
-  { if [ "$#" -eq 0 ]; then cat -
-    else echo "pkenv: $*"
+  {
+    if [ "$#" -eq 0 ]; then
+      cat -
+    else
+      echo "pkenv: $*"
     fi
   } >&2
   exit 1
@@ -39,25 +42,27 @@ abort() {
 
 command="$1"
 case "$command" in
-"" )
-  { pkenv---version
-    pkenv-help
-  } | abort
-  ;;
--v | --version )
-  exec pkenv---version
-  ;;
--h | --help )
-  exec pkenv-help
-  ;;
-* )
-  command_path="$(command -v "pkenv-${command}" || true)"
-  if [ -z "$command_path" ];then
-    { echo "no such command '$command'"
+  "")
+    {
+      pkenv---version
       pkenv-help
     } | abort
-  fi
-  shift 1
-  exec "$command_path" "$@"
-  ;;
+    ;;
+  -v | --version)
+    exec pkenv---version
+    ;;
+  -h | --help)
+    exec pkenv-help
+    ;;
+  *)
+    command_path="$(command -v "pkenv-${command}" || true)"
+    if [ -z "$command_path" ]; then
+      {
+        echo "no such command '$command'"
+        pkenv-help
+      } | abort
+    fi
+    shift 1
+    exec "$command_path" "$@"
+    ;;
 esac

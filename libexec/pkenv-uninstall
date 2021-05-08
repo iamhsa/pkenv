@@ -9,10 +9,10 @@ declare version_requested version regex
 
 get_version_requested ${1}
 
-if [[ "${version_requested}" =~ ^latest\:.*$ ]]; then
+if [[ ${version_requested} =~ ^latest\:.*$ ]]; then
   version="${version_requested%%\:*}"
   regex="${version_requested##*\:}"
-elif [[ "${version_requested}" =~ ^latest$ ]]; then
+elif [[ ${version_requested} =~ ^latest$ ]]; then
   version="${version_requested}"
   regex=""
 else
@@ -30,4 +30,3 @@ if [ -f "${dst_path}/packer" ]; then
   rm -r "${dst_path}"
   info "\033[0;32mPacker v${version} is successfully uninstalled\033[0;39m"
 fi
-

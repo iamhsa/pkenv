@@ -13,8 +13,8 @@ function error_and_die() {
 }
 
 [ -n "${PKENV_DEBUG}" ] && set -x
-source $(dirname $0)/helpers.sh \
-  || error_and_die "Failed to load test helpers: $(dirname $0)/helpers.sh"
+source $(dirname $0)/helpers.sh ||
+  error_and_die "Failed to load test helpers: $(dirname $0)/helpers.sh"
 
 PKENV_BIN_DIR=/tmp/pkenv-test
 rm -rf ${PKENV_BIN_DIR} && mkdir ${PKENV_BIN_DIR}
@@ -35,5 +35,5 @@ if [ ${#errors[@]} -gt 0 ]; then
   exit 1
 else
   echo -e "\033[0;32mAll symlink tests passed.\033[0;39m"
-fi;
+fi
 exit 0

@@ -9,10 +9,10 @@ declare version_requested version regex
 
 version_requested="${1}"
 
-if [[ "${version_requested}" =~ ^latest\:.*$ ]]; then
+if [[ ${version_requested} =~ ^latest\:.*$ ]]; then
   version="${version_requested%%\:*}"
   regex="${version_requested##*\:}"
-elif [[ "${version_requested}" =~ ^latest$ ]]; then
+elif [[ ${version_requested} =~ ^latest$ ]]; then
   version="${version_requested}"
   regex=""
 else
@@ -20,24 +20,25 @@ else
   regex="^${version_requested}$"
 fi
 
-[ -d "${PKENV_ROOT}/versions" ] \
-  || error_and_die "No versions of packer installed. Please install one with: pkenv install"
+[ -d "${PKENV_ROOT}/versions" ] ||
+  error_and_die "No versions of packer installed. Please install one with: pkenv install"
 
-version="$(\ls "${PKENV_ROOT}/versions" \
-  | sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 \
-  | grep -e "${regex}" \
-  | head -n 1
+version="$(
+  \ls "${PKENV_ROOT}/versions" |
+    sort -t'.' -k 1nr,1 -k 2nr,2 -k 3nr,3 |
+    grep -e "${regex}" |
+    head -n 1
 )"
 
 [ -n "${version}" ] || error_and_die "No installed versions of packer matched '${1}'"
 
 target_path=${PKENV_ROOT}/versions/${version}
-[ -f ${target_path}/packer ] \
-  || error_and_die "Version directory for ${version} is present, but the packer binary is not! Manual intervention required."
-[ -x ${target_path}/packer ] \
-  || error_and_die "Version directory for ${version} is present, but the packer binary is not executable! Manual intervention required. "
+[ -f ${target_path}/packer ] ||
+  error_and_die "Version directory for ${version} is present, but the packer binary is not! Manual intervention required."
+[ -x ${target_path}/packer ] ||
+  error_and_die "Version directory for ${version} is present, but the packer binary is not executable! Manual intervention required. "
 
 info "Switching to v${version}"
-echo "${version}" > "$(pkenv-version-file)" || error_and_die "'switch to v${version} failed'"
+echo "${version}" >"$(pkenv-version-file)" || error_and_die "'switch to v${version} failed'"
 ${PKENV_ROOT}/bin/packer version 1>/dev/null || error_and_die "'packer version' failed. Something is seriously wrong"
 info "Switching completed"

@@ -3,7 +3,7 @@ set -e
 [ -n "${PKENV_DEBUG}" ] && set -x
 source ${PKENV_ROOT}/libexec/helpers
 
-if [ ${#} -ne 0 ];then
+if [ ${#} -ne 0 ]; then
   echo "usage: pkenv list-remote" 1>&2
   exit 1
 fi
