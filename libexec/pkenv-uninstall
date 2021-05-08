@@ -21,7 +21,7 @@ else
 fi
 
 [ -n "${version}" ] || error_and_die "Version is not specified"
-version="$(pkenv-list | sed -E 's/^(\*| )? //g; s/ \(set by .+\)$//' | grep -e "${regex}" | head -n 1)"
+version="$(pkenv-list | sed -E 's/^(\*| )? //g; s/ \(set by .+\)$//' | grep -e "${regex}" | tail -n 1)"
 [ -n "${version}" ] || error_and_die "No versions matching '${1}' found in local"
 
 dst_path="${PKENV_ROOT}/versions/${version}"
