@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2143
+check_version() {
+  v="${1}"
+  [ -n "$(packer version | grep -E "^Packer v${v}(-dev)?$")" ]
+}
+
+cleanup() {
+  rm -rf ./versions
+  rm -rf ./.packer-version
+}
+
+function error_and_proceed() {
+  errors+=("${1}")
+  echo -e "pkenv: ${0}: Test Failed: ${1}" >&2
+}
+
+function error_and_die() {
+  echo -e "pkenv: ${0}: ${1}" >&2
+  exit 1
+}
