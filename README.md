@@ -37,17 +37,17 @@ On any other platform, you can install pkenv as follows:
   ```console
   $ ln -s ${HOME}/.pkenv/bin/* /usr/local/bin
   ```
-  
+
   On Ubuntu/Debian touching `/usr/local/bin` might require sudo access, but you can create `${HOME}/bin` or `${HOME}/.local/bin` and on next login it will get added to the session `$PATH`
   or by running `. ${HOME}/.profile` it will get added to the current shell session's `$PATH`.
-  
+
   ```console
   $ mkdir -p ~/.local/bin/
   $ . ~/.profile
   $ ln -s ~/.pkenv/bin/* ~/.local/bin
   $ command -v pkenv
   ```
-  
+
 
 ## Usage
 ### pkenv install [version]
@@ -165,6 +165,20 @@ $ echo latest:^1.4 > .packer-version
 
 $ packer version
 1.4.2
+```
+
+### Environment Variables
+
+#### PKENV
+
+##### `PKENV_REMOTE`
+
+String (Default: https://releases.hashicorp.com)
+
+To install from a remote other than the default
+
+```console
+$ PKENV_REMOTE=https://example.jfrog.io/artifactory/hashicorp
 ```
 
 ## Upgrading
