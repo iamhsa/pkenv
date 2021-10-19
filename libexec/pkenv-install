@@ -53,7 +53,7 @@ keybase_bin="$(command -v keybase 2>/dev/null)"
 shasum_bin="$(command -v shasum 2>/dev/null)"
 
 PKENV_REMOTE="${PKENV_REMOTE:-https://releases.hashicorp.com}";
-version_url="${PKENV_REMOTEpkenv}/packer/${version}";
+version_url="${PKENV_REMOTE}/packer/${version}";
 
 tarball_name="packer_${version}_${os}.zip"
 shasums_name="packer_${version}_SHA256SUMS"
