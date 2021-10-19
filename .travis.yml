@@ -10,5 +10,6 @@ matrix:
       osx_image: xcode10.2 # OS X 10.14
     - os: osx
       osx_image: xcode12.5 # OS X 11.3
+    - os: windows
 script:
   - ./test/run.sh
