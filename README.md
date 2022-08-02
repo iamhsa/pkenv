@@ -84,12 +84,6 @@ validation failure.
 If you use [.packer-version](#packer-version), `pkenv install` (no argument) will install the version written in it.
 ### Specify architecture
 
-Architecture other than the default amd64 can be specified with the `PKENV_ARCH` environment variable
-
-```console
-PKENV_ARCH=arm pkenv install 1.3.1
-```
-
 ### pkenv use
 Switch a version to use
 `latest` is a syntax to use the latest installed version
