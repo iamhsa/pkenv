@@ -10,4 +10,4 @@ fi
 
 PKENV_REMOTE="${PKENV_REMOTE:-https://releases.hashicorp.com}"
 
-curlw -sf "${PKENV_REMOTE}/packer/" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+(-(rc|beta)[0-9]+)?" | uniq
+curlw -sf "${PKENV_REMOTE}/packer/" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+(-(alpha|rc|beta)([0-9]+)*)?" | uniq
